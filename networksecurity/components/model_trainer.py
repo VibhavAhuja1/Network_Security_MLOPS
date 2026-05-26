@@ -21,10 +21,10 @@ import mlflow
 from urllib.parse import urlparse
 
 import dagshub
-dagshub.init(repo_owner='vibhavahuja4', repo_name='Network-Security', mlflow=True)
+dagshub.init(repo_owner='vibhavahuja4', repo_name='Network_Security_MLOPS', mlflow=True)
 
 
-os.environ["MLFLOW_TRACKING_URI"]="https://dagshub.com/vibhavahuja4/Network-Security.mlflow"
+os.environ["MLFLOW_TRACKING_URI"]="https://dagshub.com/vibhavahuja4/Network_Security_MLOPS.mlflow"
 os.environ["MLFLOW_TRACKING_USERNAME"]="vibhavahuja4"
 os.environ["MLFLOW_TRACKING_PASSWORD"]="2988ba41a3d8bdae372b377aef169e920b1dcf6f"
 
@@ -38,7 +38,7 @@ class ModelTrainer:
             raise NetworkSecurityException(e,sys)
         
     def track_mlflow(self,best_model,classificationmetric):
-        mlflow.set_registry_uri("https://dagshub.com/vibhavahuja4/Network-Security.mlflow")
+        mlflow.set_registry_uri("https://dagshub.com/vibhavahuja4/Network_Security_MLOPS.mlflow")
         tracking_url_type_store = urlparse(mlflow.get_tracking_uri()).scheme
         with mlflow.start_run():
             f1_score=classificationmetric.f1_score
@@ -56,7 +56,7 @@ class ModelTrainer:
                 # There are other ways to use the Model Registry, which depends on the use case,
                 # please refer to the doc for more information:
                 # https://mlflow.org/docs/latest/model-registry.html#api-workflow
-                mlflow.sklearn.log_model(best_model, "model", registered_model_name=best_model)
+                mlflow.sklearn.log_model(best_model, "model", registered_model_name=best_model.__class__.__name__ )
             else:
                 mlflow.sklearn.log_model(best_model, "model")
 
